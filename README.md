@@ -595,7 +595,7 @@ A missing resource typically returns `404 Not Found`. A duplicate or database co
 ```json
 {
   "organizationName": "Branchwork Technologies",
-  "name": "Maheed Ahammed",
+  "name": "Maeed Ahammed",
   "email": "owner@example.com",
   "password": "StrongPassword123"
 }
@@ -646,7 +646,7 @@ Example response:
   "user": {
     "id": "11111111-1111-4111-8111-111111111111",
     "organizationId": "22222222-2222-4222-8222-222222222222",
-    "name": "Maheed Ahammed",
+    "name": "Maeed Ahammed",
     "email": "owner@example.com",
     "userType": "OWNER"
   }
@@ -673,7 +673,7 @@ Owner example:
   "id": "11111111-1111-4111-8111-111111111111",
   "organizationId": "22222222-2222-4222-8222-222222222222",
   "userType": "OWNER",
-  "name": "Maheed Ahammed",
+  "name": "Maeed Ahammed",
   "branchId": null,
   "roleName": null,
   "permissions": [
