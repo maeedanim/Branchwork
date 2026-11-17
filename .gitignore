@@ -1,0 +1,27 @@
+@'
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+*.tsbuildinfo
+
+# Test coverage
+coverage/
+
+# Environment secrets
+.env
+.env.*
+!.env.example
+!.env.test.example
+
+# Logs
+*.log
+npm-debug.log*
+
+# IDE and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+'@ | Set-Content -Encoding utf8 .gitignore
