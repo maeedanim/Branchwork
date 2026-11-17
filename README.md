@@ -76,8 +76,7 @@ src/
 │   │   └── noLeadingSpecialChars.ts                      
 │   ├── helpers/
 │   │   ├── error.helper.ts
-│   │   └── validation.helper.ts
-│   ├── interceptors/                
+│   │   └── validation.helper.ts               
 │   ├── interfaces/
 │   │   ├── jwt-payload.interface.ts
 │   │   ├── pagination.interface.ts
