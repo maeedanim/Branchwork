@@ -74,13 +74,13 @@ src/
 │   │   └── permissions.constants.ts
 │   ├── decorators/
 │   │   └── noLeadingSpecialChars.ts
-│   ├── dto/                         # Empty in supplied tree
-│   ├── filters/                     # Empty in supplied tree
-│   ├── guards/                      # Empty in supplied tree
+│   ├── dto/                         
+│   ├── filters/                     
+│   ├── guards/                      
 │   ├── helpers/
 │   │   ├── error.helper.ts
 │   │   └── validation.helper.ts
-│   ├── interceptors/                # Empty in supplied tree
+│   ├── interceptors/                
 │   ├── interfaces/
 │   │   ├── jwt-payload.interface.ts
 │   │   ├── pagination.interface.ts
