@@ -1,4 +1,6 @@
+
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   NotFoundException,
@@ -62,7 +64,7 @@ export class BranchesService {
     dto: UpdateBranchDto,
   ): Promise<Branch> {
     if (dto.name === undefined) {
-      throw new ConflictException(
+      throw new BadRequestException(
         'At least one field must be provided.',
       );
     }

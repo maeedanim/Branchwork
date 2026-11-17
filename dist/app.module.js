@@ -15,6 +15,7 @@ const config_1 = require("@nestjs/config");
 const typeorm_1 = require("@nestjs/typeorm");
 const database_config_1 = __importDefault(require("./config/database.config"));
 const jwt_config_1 = __importDefault(require("./config/jwt.config"));
+const products_module_1 = require("./modules/products/products.module");
 const organization_module_1 = require("./modules/organization/organization.module");
 const branches_module_1 = require("./modules/branches/branches.module");
 const auth_module_1 = require("./modules/auth/auth.module");
@@ -42,6 +43,7 @@ exports.AppModule = AppModule = __decorate([
             organization_module_1.OrganizationModule,
             branches_module_1.BranchesModule,
             auth_module_1.AuthModule,
+            products_module_1.ProductsModule,
         ],
     })
 ], AppModule);

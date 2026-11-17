@@ -1,14 +1,21 @@
+
 import {
   BadRequestException,
+  ConflictException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { QueryFailedError } from 'typeorm';
 
 import { RbacRepository } from './rbac.repository';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
 import { PERMISSIONS } from '../../common/constants/permissions.constants';
 import { Role } from '../../schemas/Role.schema';
+
+interface PostgresError {
+  code?: string;
+}
 
 @Injectable()
 export class RbacAdminService {
@@ -22,11 +29,16 @@ export class RbacAdminService {
   ): Promise<Role> {
     this.validatePermissions(dto.permissions);
 
-    return this.rbacRepository.create(
-      organizationId,
-      dto.name,
-      dto.permissions,
-    );
+    try {
+      return await this.rbacRepository.create(
+        organizationId,
+        dto.name,
+        dto.permissions,
+      );
+    } catch (error: unknown) {
+      this.handleDatabaseError(error);
+      throw error;
+    }
   }
 
   async findAllRoles(organizationId: string): Promise<Role[]> {
@@ -54,7 +66,10 @@ export class RbacAdminService {
     roleId: string,
     dto: UpdateRoleDto,
   ): Promise<Role> {
-    if (dto.name === undefined && dto.permissions === undefined) {
+    if (
+      dto.name === undefined &&
+      dto.permissions === undefined
+    ) {
       throw new BadRequestException(
         'At least one field must be provided.',
       );
@@ -64,9 +79,17 @@ export class RbacAdminService {
       this.validatePermissions(dto.permissions);
     }
 
-    const role = await this.findRole(organizationId, roleId);
+    const role = await this.findRole(
+      organizationId,
+      roleId,
+    );
 
-    return this.rbacRepository.update(role, dto);
+    try {
+      return await this.rbacRepository.update(role, dto);
+    } catch (error: unknown) {
+      this.handleDatabaseError(error);
+      throw error;
+    }
   }
 
   async deleteRole(
@@ -75,7 +98,15 @@ export class RbacAdminService {
   ): Promise<void> {
     await this.findRole(organizationId, roleId);
 
-    await this.rbacRepository.delete(organizationId, roleId);
+    try {
+      await this.rbacRepository.delete(
+        organizationId,
+        roleId,
+      );
+    } catch (error: unknown) {
+      this.handleDatabaseError(error);
+      throw error;
+    }
   }
 
   getPermissionCatalog(): string[] {
@@ -89,6 +120,27 @@ export class RbacAdminService {
     ) {
       throw new BadRequestException(
         'product.organize requires product.view.',
+      );
+    }
+  }
+
+  private handleDatabaseError(error: unknown): void {
+    if (!(error instanceof QueryFailedError)) {
+      return;
+    }
+
+    const databaseError =
+      error.driverError as PostgresError;
+
+    if (databaseError.code === '23505') {
+      throw new ConflictException(
+        'A role with this name already exists.',
+      );
+    }
+
+    if (databaseError.code === '23503') {
+      throw new ConflictException(
+        'This role is assigned to staff members and cannot be deleted.',
       );
     }
   }

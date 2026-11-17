@@ -3,21 +3,21 @@ import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
   IsInt,
-  IsOptional,
   Max,
   Min,
+  ValidateIf,
 } from 'class-validator';
 
 export class StaffQueryDto {
   @ApiPropertyOptional({ default: 1, minimum: 1 })
-  @IsOptional()
+  @ValidateIf((_object, value) => value !== undefined)
   @Type(() => Number)
   @IsInt()
   @Min(1)
   page = 1;
 
   @ApiPropertyOptional({ default: 20, minimum: 1, maximum: 100 })
-  @IsOptional()
+  @ValidateIf((_object, value) => value !== undefined)
   @Type(() => Number)
   @IsInt()
   @Min(1)

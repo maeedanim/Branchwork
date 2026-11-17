@@ -1,11 +1,12 @@
+
 import { Transform } from 'class-transformer';
 import {
   ArrayUnique,
   IsArray,
   IsIn,
-  IsOptional,
   IsString,
   Length,
+  ValidateIf,
 } from 'class-validator';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 
@@ -17,7 +18,7 @@ export class UpdateRoleDto {
     example: 'Senior Branch Manager',
     description: 'Updated role name',
   })
-  @IsOptional()
+  @ValidateIf((_object, value) => value !== undefined)
   @Transform(({ value }) =>
     typeof value === 'string' ? value.trim() : value,
   )
@@ -32,7 +33,7 @@ export class UpdateRoleDto {
     isArray: true,
     enum: PERMISSION_CATALOG,
   })
-  @IsOptional()
+  @ValidateIf((_object, value) => value !== undefined)
   @IsArray()
   @ArrayUnique()
   @IsIn(PERMISSION_CATALOG, { each: true })
