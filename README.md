@@ -73,10 +73,7 @@ src/
 │   ├── constants/
 │   │   └── permissions.constants.ts
 │   ├── decorators/
-│   │   └── noLeadingSpecialChars.ts
-│   ├── dto/                         
-│   ├── filters/                     
-│   ├── guards/                      
+│   │   └── noLeadingSpecialChars.ts                      
 │   ├── helpers/
 │   │   ├── error.helper.ts
 │   │   └── validation.helper.ts
