@@ -8,6 +8,7 @@ import { CommonModule } from '../../common/common.module';
 import { BranchesModule } from '../branches/branches.module';
 import { RbacModule } from '../auth/rbac.module';
 
+import { UsersController } from './users.controller';
 import { UsersRepository } from './users.repository';
 import { UsersService } from './users.service';
 
@@ -18,10 +19,8 @@ import { UsersService } from './users.service';
     BranchesModule,
     RbacModule,
   ],
-  providers: [
-    UsersRepository,
-    UsersService,
-  ],
+  controllers: [UsersController],
+  providers: [UsersRepository, UsersService],
   exports: [UsersService],
 })
 export class UsersModule {}
