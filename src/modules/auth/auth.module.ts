@@ -4,7 +4,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
-
+import type { SignOptions } from 'jsonwebtoken';
 import { CommonModule } from '../../common/common.module';
 
 import { OrganizationModule } from '../organization/organization.module';
@@ -28,7 +28,9 @@ import { AccessGuard } from './guards/access.guard';
       useFactory: (configService: ConfigService) => ({
         secret: configService.get<string>('jwt.secret'),
         signOptions: {
-          expiresIn: configService.get<string>('jwt.expiresIn') as any,
+          expiresIn: configService.getOrThrow<string>(
+  'jwt.expiresIn',
+) as SignOptions['expiresIn'],
         },
       }),
     }),

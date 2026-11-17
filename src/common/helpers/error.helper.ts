@@ -15,7 +15,13 @@ export function throwDatabaseError(error: unknown): never {
   }
 
   const driverError =
-    error.driverError as PostgresDriverError;
+    error.driverError as PostgresDriverError | undefined;
+
+  if (!driverError?.code) {
+    throw new ConflictException(
+      'A database operation could not be completed.',
+    );
+  }
 
   switch (driverError.code) {
     case '23505':
