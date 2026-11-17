@@ -8,7 +8,7 @@ import {
 
 import databaseConfig from './config/database.config';
 import jwtConfig from './config/jwt.config';
-
+import { ProductsModule } from './modules/products/products.module';
 import { OrganizationModule } from './modules/organization/organization.module';
 import { BranchesModule } from './modules/branches/branches.module';
 import { AuthModule } from './modules/auth/auth.module';
@@ -41,6 +41,7 @@ import { AuthModule } from './modules/auth/auth.module';
     OrganizationModule,
     BranchesModule,
     AuthModule,
+    ProductsModule,
   ],
 })
 export class AppModule {}

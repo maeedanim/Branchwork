@@ -113,19 +113,25 @@ export class UsersController {
     return this.toResponse(user);
   }
 
-  @Delete(':id')
-  @OwnerOnly()
-  @HttpCode(HttpStatus.NO_CONTENT)
-  @ApiOperation({ summary: 'Delete a staff member' })
-  async deleteStaff(
-    @GetUser() requester: RequestUser,
-    @Param('id', ParseUUIDPipe) userId: string,
-  ): Promise<void> {
-    await this.usersService.deleteStaff(
-      requester.organizationId,
-      userId,
-    );
-  }
+  
+@Delete(':id')
+@OwnerOnly()
+@HttpCode(HttpStatus.OK)
+@ApiOperation({ summary: 'Delete a staff member' })
+async deleteStaff(
+  @GetUser() requester: RequestUser,
+  @Param('id', ParseUUIDPipe) userId: string,
+): Promise<{ message: string }> {
+  await this.usersService.deleteStaff(
+    requester.organizationId,
+    userId,
+  );
+
+  return {
+    message: 'Staff member has been deleted successfully.',
+  };
+}
+
 
   private toResponse(user: User): UserResponseDto {
     return {
